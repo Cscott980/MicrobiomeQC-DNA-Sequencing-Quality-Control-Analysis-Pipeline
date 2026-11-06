@@ -21,7 +21,7 @@ def process_fastq(file_path):
 
     with open_fastq(file_path) as handle:
 
-       for record in SeqIO.parse(handle, "fq"):
+       for record in SeqIO.parse(handle, "fastq"):
 
             sequence = str(record.seq)
 
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     script_dir = Path(__file__).resolve().parent
     project_root = script_dir.parent
     
-    file_path = project_root / "data" / "sample_data" / "demo.fq"
+    file_path = project_root / "data" / "sample_data" / "demo.fastq"
 
     reads = process_fastq(file_path)
 
@@ -55,3 +55,13 @@ if __name__ == "__main__":
 
     for read in reads:
         print(read)
+
+"""
+Result Sample: 
+    Total reads: 4
+{'read_id': 'SAMPLE_001', 'sequence': 'ATCGATCGATCG', 'length': 12, 'average_quality': 40.0}
+{'read_id': 'SAMPLE_002', 'sequence': 'GCTAGCTAGCTA', 'length': 12, 'average_quality': 39.0}
+{'read_id': 'SAMPLE_003', 'sequence': 'TTGCAATTGCAA', 'length': 12, 'average_quality': 40.0}
+{'read_id': 'SAMPLE_004', 'sequence': 'CGATCGATCGAT', 'length': 12, 'average_quality': 39.0}
+
+"""
