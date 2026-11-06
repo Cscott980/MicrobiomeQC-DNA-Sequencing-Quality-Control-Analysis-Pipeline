@@ -1,3 +1,4 @@
+from Bio import SeqIO
 from pathlib import Path
 import gzip
 
