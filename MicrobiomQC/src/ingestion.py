@@ -44,7 +44,10 @@ def process_fastq(file_path):
 
 if __name__ == "__main__":
 
-    file_path = "data/sample_data/demo.fq"
+    script_dir = Path(__file__).resolve().parent
+    project_root = script_dir.parent
+    
+    file_path = project_root / "data" / "sample_data" / "demo.fq"
 
     reads = process_fastq(file_path)
 
