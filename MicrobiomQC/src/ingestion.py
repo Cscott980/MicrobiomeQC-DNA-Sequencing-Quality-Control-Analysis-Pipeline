@@ -21,26 +21,16 @@ def process_fastq(file_path):
 
     with open_fastq(file_path) as handle:
 
-        while True:
-            header = handle.readline()
+       for record in SeqIO.parse(handle, "fq"):
 
-            if not header:
-                break
+            sequence = str(record.seq)
 
-            sequence = handle.readline().strip()
-            separator = handle.readline().strip()
-            quality = handle.readline().strip()
-
-            if not header.startswith("@"):
-                raise ValueError("Invalid FASTQ header")
-
-            if not separator.startswith("+"):
-                raise ValueError("Invalid FASTQ separator")
-
-            quality_scores = [ord(char) - 33 for char in quality]
+            quality_scores = record.letter_annotations[
+                "phred_quality"
+            ]
 
             results.append({
-                "read_id": header.strip()[1:],
+                "read_id": record.id,
                 "sequence": sequence,
                 "length": len(sequence),
                 "average_quality": (
@@ -54,7 +44,7 @@ def process_fastq(file_path):
 
 if __name__ == "__main__":
 
-    file_path = "data/sample_data/demo.fastq"
+    file_path = "data/sample_data/demo.fq"
 
     reads = process_fastq(file_path)
 
